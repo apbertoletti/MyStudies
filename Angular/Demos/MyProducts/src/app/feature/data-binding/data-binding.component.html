@@ -1,0 +1,61 @@
+<div class="container main-container">
+    <h3>Interpolation</h3>
+
+    <p>O numero de cliques é {{ contadorClique }}</p>
+
+    <br>
+    <br>
+
+    <h3>Porperty binding</h3>
+
+    <button class="btn btn-info" [disabled]="contadorClique>=10">Info</button>
+
+    <br>
+    <br>
+
+    <img [src]="urlImagem" height="50px" width="50px">
+
+    <br>
+    <br>
+
+    <h3>Event binding</h3>
+
+    <button class="btn btn-warning" (click)="adicionarClique()">Clique-me</button>
+    <button class="btn btn-danger" (click)="zerarContador()" [disabled]="contadorClique<10">Zerar contador</button>
+
+
+    <br>
+    <br>
+
+    <h3>Two way binding</h3>
+
+    <!-- Primeira forma: Sem implementar o two way binding, porém com o mesmo comportamento final -->
+    <!-- <input type="text" (keyup)="soltarTecla($event)" placeholder="Digite seu nome">
+    <br>
+    <br>
+    <label>Seu nome é {{ nomeDigitado }}</label> -->
+
+    <!-- Segunda forma: usando a diretiva o ngModel -->
+    <!-- <input type="text" [ngModel]="nomeDigitado" (ngModelChange)="nomeDigitado = $event" placeholder="Digite seu nome">
+    <br>
+    <br>
+    <label>Seu nome é {{ nomeDigitado }}</label> -->
+
+    <!-- Terceira forma: usando o ngModel com a sintaxe 'banana in a box' -->
+    <input type="text" [(ngModel)]="nomeDigitado" placeholder="Digite seu nome">
+    <br>
+    <br>
+    <label>Seu nome é {{ nomeDigitado }}</label>
+
+    <br>
+    <br>
+
+    <h3>Alterando a classe de um elemento HTML Data Binding + diretiva ngClass</h3>
+
+
+    <input type="text" [(ngModel)]="classeCSS" placeholder="Digite o nome da classe CSS">
+    <br>
+    <br>
+    <label [ngClass]="classeCSS">Seu componente</label>
+
+</div>
