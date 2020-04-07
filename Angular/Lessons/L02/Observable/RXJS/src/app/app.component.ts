@@ -45,11 +45,12 @@ export class AppComponent {
   minhaObservable(nome: string) : Observable<string> {
     return new Observable(subs => {
       if (nome === 'André') {
-        subs.next('Olá!');
-        subs.next('Olá novamente!');
+        subs.next('Olá! ' + nome);
+        subs.next('Olá ' + nome + ' novamente!');
         setTimeout(() => {
           subs.next('Resposta com delay"');
         }, 5000);
+        subs.complete();
       }
       else{
         subs.error('Ops... deu erro!')
@@ -58,13 +59,26 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.minhaPrommisse('André')
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    // this.minhaPrommisse('André')
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err));
 
-    this.minhaObservable('André')
-      .subscribe(
-        result => console.log(result),
-        err => console.log(err));    
+    // this.minhaObservable('André')
+    //   .subscribe(
+    //     result => console.log(result),
+    //     err => console.log(err));    
+
+    const observer = {
+      next: val => this.escrever(val),
+      erro: err => this.escrever(err),
+      complete: () => console.log('FIM!')
+    }
+
+    const obs = this.minhaObservable('André');
+    obs.subscribe(observer);
+  }
+
+  escrever(texto: string) {
+    console.log(texto)
   }
 }
