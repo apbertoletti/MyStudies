@@ -58,6 +58,36 @@ export class AppComponent {
     })
   }
 
+  usuarioObservable(nome: string, email: string) : Observable<Usuario> {
+    return new Observable(subs => {
+      if (nome === 'Admin') {
+        let usuario = new Usuario(nome, email);      
+        setTimeout(() => {
+          subs.next(usuario);
+        }, 1000);
+
+        setTimeout(() => {
+          subs.next(usuario);
+        }, 3000);
+        
+        setTimeout(() => {
+          subs.next(usuario);
+        }, 5000);
+
+        setTimeout(() => {
+          subs.next(usuario);
+        }, 7000);
+
+        setTimeout(() => {
+          subs.complete();
+        }, 9000);
+      }
+      else{
+        subs.error('Ops... deu erro!')
+      }
+    })
+  }
+
   ngOnInit(): void {
     // this.minhaPrommisse('André')
     //   .then(res => console.log(res))
@@ -74,11 +104,30 @@ export class AppComponent {
       complete: () => console.log('FIM!')
     }
 
-    const obs = this.minhaObservable('André');
-    obs.subscribe(observer);
+    // const obs = this.minhaObservable('André');
+    // obs.subscribe(observer);
+
+    const obs = this.usuarioObservable('Admin', 'admin@admin.com');
+    const subs = obs.subscribe(observer);
+
+    setTimeout(() => {
+      subs.unsubscribe();
+      this.escrever('Conexão fechada: ' + subs.closed);
+    }, 3500);
+
   }
 
   escrever(texto: string) {
     console.log(texto)
+  }
+}
+
+export class Usuario {
+  email: string;
+  nome: string;
+
+  constructor(nome: string, email: string) {
+    this.nome = nome;
+    this.email = email;
   }
 }
