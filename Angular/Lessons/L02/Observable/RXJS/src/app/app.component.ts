@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable, Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -41,9 +42,29 @@ export class AppComponent {
     });
   }
 
+  minhaObservable(nome: string) : Observable<string> {
+    return new Observable(subs => {
+      if (nome === 'André') {
+        subs.next('Olá!');
+        subs.next('Olá novamente!');
+        setTimeout(() => {
+          subs.next('Resposta com delay"');
+        }, 5000);
+      }
+      else{
+        subs.error('Ops... deu erro!')
+      }
+    })
+  }
+
   ngOnInit(): void {
     this.minhaPrommisse('André')
       .then(res => console.log(res))
       .catch(err => console.log(err));
+
+    this.minhaObservable('André')
+      .subscribe(
+        result => console.log(result),
+        err => console.log(err));    
   }
 }
