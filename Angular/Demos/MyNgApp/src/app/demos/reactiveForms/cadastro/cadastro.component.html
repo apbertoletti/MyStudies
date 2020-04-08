@@ -24,8 +24,14 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">E-mail</label>
                 <div class="col-md-10">
-                    <input class="form-control" id="email" type="text" placeholder="E-mail (requerido)" formControlName="email" />                    
+                    <input class="form-control" id="email" type="text" placeholder="E-mail (requerido)" formControlName="email" [ngClass]="{'is-invalid': cadastroForm.get('email').errors && (cadastroForm.get('email').dirty || cadastroForm.get('email').touched)}" />
                 </div>
+                <span class="text-danger" *ngIf="cadastroForm.get('email').errors?.required && (cadastroForm.get('email').dirty || cadastroForm.get('email').touched)">
+                    <p>Preencha o email</p>
+                </span>
+                <span class="text-danger" *ngIf="cadastroForm.get('email').errors?.email && (cadastroForm.get('email').dirty || cadastroForm.get('email').touched)">
+                    <p>Email em formato inválido</p>
+                </span>
             </div>
 
             <div class="form-group">
@@ -53,6 +59,7 @@
                     <p>Formulario valido: {{ cadastroForm.valid }}</p>
                     <p>Formulario Tocado: {{ cadastroForm.touched }}</p>
                     <p>Formulario Sujo: {{ cadastroForm.dirty }}</p><br>
+                    <p>Formulario result: {{ formResult }}</p><br>
                 </div>
             </div>
 
