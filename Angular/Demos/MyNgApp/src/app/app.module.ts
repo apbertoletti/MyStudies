@@ -1,13 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { AppComponent } from './app.component';
-import { rootRouterConfig } from './app.routes';
 import { NavegacaoModule } from './navegacao/navegacao.module';
 import { InstitucionalModule } from './institucional/institucional.module';
 import { CadastroModule } from './demos/reactiveForms/cadastro.module';
+import { AppRoutingModule } from './app.routes';
 
 @NgModule({
   declarations: [
@@ -18,7 +17,7 @@ import { CadastroModule } from './demos/reactiveForms/cadastro.module';
     NavegacaoModule,
     InstitucionalModule,
     CadastroModule,
-    [RouterModule.forRoot(rootRouterConfig, { useHash: false})]
+    AppRoutingModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'}
