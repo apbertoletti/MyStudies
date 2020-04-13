@@ -23,7 +23,7 @@ export class ProdutoDashboardComponent implements OnInit {
     {
       id: 2,
       nome: 'Teste 2',
-      ativo: true,
+      ativo: false,
       valor: 200,
       imagem: 'gopro.jpg'
     },
