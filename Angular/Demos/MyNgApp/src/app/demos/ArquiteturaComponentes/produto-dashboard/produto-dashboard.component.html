@@ -10,7 +10,10 @@
             class="col-md-4"
             *ngFor="let prod of produtos"
             [produto]="prod" 
-            (status)="mudarStatus($event)"></produto-card-detalhe>            
+            (status)="mudarStatus($event)">
+            <h5 class="acabou">Ou vá até uma de nossas lojas</h5>
+            <h5 class="promocao">Promoção válida até o próximo final de semana.</h5>
+        </produto-card-detalhe>            
 
     </div>
 </div>

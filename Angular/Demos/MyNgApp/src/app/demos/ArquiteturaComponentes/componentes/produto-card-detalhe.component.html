@@ -14,19 +14,22 @@
         <div *ngIf="!produto.ativo" class="card-body">
             <div>
                 <h4>Avise-me quando chegar</h4>
+                <ng-content select=".acabou"></ng-content>
             </div>
         </div>
 
         <div *ngIf="produto.ativo" class="card-body">
             <div>
                 <h4>{{ produto.valor | currency:'BRL':'symbol':'1.2-2':'pt' }}</h4>
+                <ng-content select=".promocao"></ng-content>
             </div>
         </div>
 
         <div class="card-footer">
             <a [ngClass]="produto.ativo ? 'btn btn-success' : 'btn btn-danger' " (click)="emitirEvento()">
                 <span [ngClass]="produto.ativo ? 'fa fa-toggle-on' : 'fa fa-toggle-off'">
-                    <span forecolor="white"> Status</span>
+                    <span *ngIf="produto.ativo"> Desativar</span>
+                    <span *ngIf="!produto.ativo"> Ativar</span>
                 </span>
             </a>
         </div>
