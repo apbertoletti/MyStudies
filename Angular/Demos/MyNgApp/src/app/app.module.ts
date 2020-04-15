@@ -8,6 +8,7 @@ import { InstitucionalModule } from './institucional/institucional.module';
 import { CadastroModule } from './demos/reactiveForms/cadastro.module';
 import { AppRoutingModule } from './app.routes';
 import { AuthGuard } from './services/app.guard';
+import { CadastroGuard } from './services/cadastro.guard';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthGuard } from './services/app.guard';
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},
-    AuthGuard
+    AuthGuard,
+    CadastroGuard
   ],
   bootstrap: [AppComponent]
 })

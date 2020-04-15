@@ -25,6 +25,8 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   genericValidator: GenericValidator;
   displayMessage: DisplayMessage = {};
 
+  podeFecharFormulario: boolean;
+
   constructor(private fb: FormBuilder) {
     
     this.validationMessages = {
@@ -56,6 +58,8 @@ export class CadastroComponent implements OnInit, AfterViewInit {
    }
 
   ngOnInit() {
+    this.podeFecharFormulario = true;
+    
     let senha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6,15])]);
     let senhaConfirm = new FormControl('', [Validators.required, CustomValidators.rangeLength([6,15]), CustomValidators.equalTo(senha)]);
 
@@ -74,6 +78,7 @@ export class CadastroComponent implements OnInit, AfterViewInit {
 
     merge(...controlBlurs).subscribe(() => {
       this.displayMessage = this.genericValidator.processarMensagens(this.cadastroForm);
+      this.podeFecharFormulario = false;
     });
   }
 
@@ -81,6 +86,10 @@ export class CadastroComponent implements OnInit, AfterViewInit {
     if (this.cadastroForm.dirty && this.cadastroForm.valid) {
       this.usuario = Object.assign({}, this.usuario, this.cadastroForm.value);
       this.formResult = JSON.stringify(this.cadastroForm.value);
+
+      //Enviar dados para o backend
+
+      this.podeFecharFormulario = true;
     }
     else {
       this.formResult = "Não submeteu!!!"
