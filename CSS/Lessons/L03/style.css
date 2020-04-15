@@ -1,0 +1,76 @@
+/* GERAL */
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* TAGS */
+header{
+    background-color: lightgoldenrodyellow;
+    color: black;
+    padding: 10px;
+    min-height: 100px;
+}
+
+h1{
+    text-align: center;
+    color: red;
+    text-shadow: 1px 1px 1px black;
+}
+
+p{
+    padding: 10px;
+    color: white;
+}
+
+footer{
+    clear: both;
+    background-color: lightgoldenrodyellow;
+    color: black;
+    height: 30px;
+    text-align: center;
+    padding: 10px 0 0 0;
+}
+
+/* IDs */
+#principal{
+    background-image: url('city.jpg');
+    clear: both;
+    min-height: 500px;
+    background-size: 100%;
+    padding: 100px;
+}
+
+#logo {
+    float: left;
+}
+
+#menu {
+    margin-top: 20px;
+    float: right;
+}
+
+#menu a {
+    font-family: Helvetica;
+    padding: 15px;
+    text-decoration: none;
+    color: #111111;
+    text-shadow: 1px 1px #111111;
+}
+
+#menu a:hover{
+    background-color: black;
+    color: lightgoldenrodyellow;
+    -webkit-transition: 1s
+}
+
+/* CLASSES */
+.container{
+    width: 860px;
+    margin: 0 auto;
+}
+
+.efeito{
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 80px 0 0px 0;
+}

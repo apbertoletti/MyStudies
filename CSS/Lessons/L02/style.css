@@ -1,0 +1,39 @@
+/* GERAL */
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* TAGS */
+header{
+    background-color: indigo;
+    color: white;
+}
+
+#direita{
+    background-color: violet;
+    min-height: 200px;
+    width: 40%;
+    float: right;
+}
+
+/* IDs */
+#esquerda{
+    background-color: tomato;
+    min-height: 200px;
+    width: 60%;
+    float: left;
+}
+
+footer{
+    clear: both;
+    background-color: indigo;
+    color: white;
+    height: 30px;
+}
+
+/* CLASSES */
+.container{
+    width: 960px;
+    margin: 0 auto;
+}
