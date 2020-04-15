@@ -46,6 +46,7 @@ export class ProdutoDashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.produtos = this.route.snapshot.data['prods']
+    console.log(this.route.snapshot.data['teste']);
   }
 
   mudarStatus(evento: Produto) {

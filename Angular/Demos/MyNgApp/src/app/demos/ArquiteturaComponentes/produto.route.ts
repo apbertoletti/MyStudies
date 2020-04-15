@@ -15,6 +15,9 @@ const produtoRouterConfig: Routes = [
                 component: ProdutoDashboardComponent, 
                 resolve: {
                     prods: ProdutoResolve
+                },
+                data: {
+                    teste: 'informação'
                 } 
             },
             { path: 'editar/:id', component: EditarProdutoComponent}
