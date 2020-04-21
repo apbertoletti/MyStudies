@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BarComponent } from './bar.component';
-import { BarUnidadeConfig } from './bar.confg';
+import { BarUnidadeConfig, BAR_UNIDADE_CONFIG } from './bar.confg';
 
 @NgModule({
     imports: [
@@ -17,7 +17,7 @@ export class BarModule {
         return {
             ngModule: BarModule,
             providers: [
-                { provide: 'configManualUnidade', useValue: config }
+                { provide: BAR_UNIDADE_CONFIG, useValue: config }
             ]
         }
     }
