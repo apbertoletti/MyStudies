@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { NotFoundComponent } from './navegacao/not-found/not-found.component';
 import { AuthGuard } from './services/app.guard';
 import { CadastroGuard } from './services/cadastro.guard';
+import { FilmesComponent } from './demos/pipes/filmes/filmes.component';
 
 export const rootRouterConfig: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -27,6 +28,7 @@ export const rootRouterConfig: Routes = [
                canLoad: [AuthGuard],
                canActivate: [AuthGuard]
     },
+    { path: 'filme', component: FilmesComponent },
 
     { path: '**', component: NotFoundComponent }
 ];
