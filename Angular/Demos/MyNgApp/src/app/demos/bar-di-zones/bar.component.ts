@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Injector } from '@angular/core';
 import { BarService, BarFactory } from './bar.service';
 import { BarServiceMock } from './bar-mock.service';
 import { BarUnidadeConfig, BAR_UNIDADE_CONFIG } from './bar.confg';
@@ -14,7 +14,7 @@ import { HttpClient } from '@angular/common/http';
             provide: BarService,
             useFactory: BarFactory, 
                         deps: [
-                            HttpClient, BAR_UNIDADE_CONFIG
+                            HttpClient, Injector
                         ]
         }
     ]

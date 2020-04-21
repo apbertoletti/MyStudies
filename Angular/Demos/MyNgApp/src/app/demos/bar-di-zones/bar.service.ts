@@ -1,9 +1,9 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BAR_UNIDADE_CONFIG, BarUnidadeConfig } from './bar.confg';
 
-export function BarFactory(http: HttpClient, config: BarUnidadeConfig) {
-    return new BarService(http, config);
+export function BarFactory(http: HttpClient, pilhaInjecao: Injector) {
+    return new BarService(http, pilhaInjecao.get(BAR_UNIDADE_CONFIG));
 }
 
 @Injectable()
