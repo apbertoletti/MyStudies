@@ -16,6 +16,8 @@ import { CadastroGuard } from './services/cadastro.guard';
 import { FilmesComponent } from './demos/pipes/filmes/filmes.component';
 import { FileSizePipe } from './demos/pipes/filmes/filesize.pipe';
 import { ImageFormaterPipe } from './demos/pipes/filmes/image.pipe';
+import { BarModule } from './demos/bar-di-zones/bar.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ImageFormaterPipe } from './demos/pipes/filmes/image.pipe';
     NavegacaoModule,
     InstitucionalModule,
     CadastroModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    BarModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},
