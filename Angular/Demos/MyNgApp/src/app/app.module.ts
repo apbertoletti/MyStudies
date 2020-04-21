@@ -33,7 +33,10 @@ import { HttpClientModule } from '@angular/common/http';
     CadastroModule,
     AppRoutingModule,
     HttpClientModule,
-    BarModule
+    BarModule.forRoot({
+      unidadeId: 1000,
+      unidadeToken: 'esad324ga3gaghas14dc'
+    })
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},
