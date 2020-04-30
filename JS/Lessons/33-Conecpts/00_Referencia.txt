@@ -1,0 +1,2 @@
+https://github.com/leonardomso/33-js-concepts
+https://www.udemy.com/course/32-conceitos-todo-dev-javascript-deveria-saber
