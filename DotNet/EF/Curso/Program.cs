@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -9,7 +10,9 @@ namespace DominadoEFCore
         static void Main(string[] args)
         {
             //EnsureCreatingAndDeleting();
-            GapEnsureCreated();
+            //GapEnsureCreated();
+
+            HealthCheckDB();
         }
 
         static void EnsureCreatingAndDeleting()
@@ -30,6 +33,20 @@ namespace DominadoEFCore
             //Abordagem para o EF conseguir criar os objetos do segundo contexto delimitado no BD
             var databaseCreator = db2.GetService<IRelationalDatabaseCreator>();
             databaseCreator.CreateTables();
+        }
+
+        static void HealthCheckDB()
+        {
+            using var bd = new Curso.Data.ApplicationContext();
+            
+            if (bd.Database.CanConnect()) 
+            {
+                Console.WriteLine("Conexão Ok");
+            }
+            else
+            {
+                Console.WriteLine($"Erro ao conectar no BD");
+            }
         }
     }
 }
