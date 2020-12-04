@@ -12,12 +12,12 @@ namespace Curso.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            const string strConnection = "Data source=(localdb)\\mssqllocaldb; Initial Catalog=MyCourseEFCore;Integrated Security=true; Pooling=false";
+            const string strConnection = "Data source=(localdb)\\mssqllocaldb; Initial Catalog=MyCourseEFCore;Integrated Security=true; Pooling=true";
 
             optionsBuilder
                 .UseSqlServer(strConnection)
-                .EnableSensitiveDataLogging();
-                //.LogTo(Console.WriteLine, LogLevel.Information);
+                .EnableSensitiveDataLogging()
+                .LogTo(Console.WriteLine, LogLevel.Information);
         }
     }
 }
