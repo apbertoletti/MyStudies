@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Testes de Javascript - Filters, Maps e Reduces</title>
+</head>
+<body>
+    <script>
+        //F I L T E R
+        //Exemplo 01 - DISTINCT
+        var list = ["{'id': 123, 'name': 'ABC'}", "{'id': 123, 'name': 'ABC'}"]; 
+        console.log(list);
+        var unique_list = new Set(list); 
+        var list = Array.from(unique_list);
+        console.log(list);
+    </script>
+</body>
+</html>
