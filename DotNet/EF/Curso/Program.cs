@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -10,9 +11,17 @@ namespace DominadoEFCore
         static void Main(string[] args)
         {
             //EnsureCreatingAndDeleting();
+         
             //GapEnsureCreated();
-
-            HealthCheckDB();
+         
+            //HealthCheckDB();
+          
+            //warmup
+            new Curso.Data.ApplicationContext().Departamentos.AsNoTracking().Any();
+            _count=0;
+            GerenciarEstadoDaConexao(false);
+            _count=0;
+            GerenciarEstadoDaConexao(true);        
         }
 
         static void EnsureCreatingAndDeleting()
@@ -47,6 +56,32 @@ namespace DominadoEFCore
             {
                 Console.WriteLine($"Erro ao conectar no BD");
             }
+        }
+
+        static int _count;
+        static void GerenciarEstadoDaConexao(bool gerenciarEstadoConexao)
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            var time = System.Diagnostics.Stopwatch.StartNew();
+
+            var conexao = db.Database.GetDbConnection();
+
+            conexao.StateChange += (_, __) => ++_count;
+
+            if (gerenciarEstadoConexao)
+            {
+                conexao.Open();
+            }
+
+            for (var i = 0; i < 200; i++)
+            {
+                db.Departamentos.AsNoTracking().Any();
+            }
+
+            time.Stop();
+            var mensagem = $"Tempo: {time.Elapsed.ToString()}, {gerenciarEstadoConexao}, Contador: {_count}";
+
+            Console.WriteLine(mensagem);
         }
     }
 }
