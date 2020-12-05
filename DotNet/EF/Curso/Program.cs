@@ -31,7 +31,23 @@ namespace DominadoEFCore
 
             //AplicarMigracaoEmTempodeExecucao();
 
-            TodasMigracoes();
+            //TodasMigracoes();
+
+            MigracoesAplicadas();
+        }
+
+        static void MigracoesAplicadas()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+
+            var migracoesPendentes = db.Database.GetAppliedMigrations();
+
+            Console.WriteLine($"Total: {migracoesPendentes.Count()}");
+
+            foreach (var migracao in migracoesPendentes)
+            {
+                Console.WriteLine($"Migração aplicada: {migracao}");
+            }
         }
 
         static void TodasMigracoes()
