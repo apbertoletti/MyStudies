@@ -25,9 +25,23 @@ namespace DominadoEFCore
 
             //ExecuteSQL();
 
-            SqlInjection();
+            //SqlInjection();
 
-            Console.ReadKey();
+            MigracoesPendentes();
+        }
+
+        static void MigracoesPendentes()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+
+            var migracoesPendentes = db.Database.GetPendingMigrations();
+
+            Console.WriteLine($"Total: {migracoesPendentes.Count()}");
+
+            foreach (var migracao in migracoesPendentes)
+            {
+                Console.WriteLine($"Migração: {migracao}");
+            }
         }
 
         static void SqlInjection()
