@@ -33,7 +33,17 @@ namespace DominadoEFCore
 
             //TodasMigracoes();
 
-            MigracoesAplicadas();
+            //MigracoesAplicadas();
+
+            ScriptGeralDoBancoDeDados();
+        }
+
+        static void ScriptGeralDoBancoDeDados()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            var script = db.Database.GenerateCreateScript();
+
+            Console.WriteLine(script);
         }
 
         static void MigracoesAplicadas()
