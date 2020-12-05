@@ -11,11 +11,11 @@ namespace DominadoEFCore
         static void Main(string[] args)
         {
             //EnsureCreatingAndDeleting();
-         
+
             //GapEnsureCreated();
-         
+
             //HealthCheckDB();
-          
+
             // //warmup
             // new Curso.Data.ApplicationContext().Departamentos.AsNoTracking().Any();
             // _count=0;
@@ -23,7 +23,42 @@ namespace DominadoEFCore
             // _count=0;
             // GerenciarEstadoDaConexao(true);        
 
-            ExecuteSQL();
+            //ExecuteSQL();
+
+            SqlInjection();
+
+            Console.ReadKey();
+        }
+
+        static void SqlInjection()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            db.Departamentos.AddRange(
+                new Curso.Domain.Departamento
+                {
+                    Descricao = "Departamento 01"
+                },
+                new Curso.Domain.Departamento
+                {
+                    Descricao = "Departamento 02"
+                });
+            db.SaveChanges();
+
+            ////Forma segura (evitar Sql Injection)
+            var descricao = "Teste ' or 1='1";
+            db.Database.ExecuteSqlRaw("update departamentos set descricao='AtaqueSqlInjection' where descricao={0}",descricao);
+
+            ////Forma insegura, simulando SQL Injection
+            //var descricao = "Teste ' or 1='1";
+            //db.Database.ExecuteSqlRaw($"update departamentos set descricao='AtaqueSqlInjection' where descricao='{descricao}'");
+
+            foreach (var departamento in db.Departamentos.AsNoTracking())
+            {
+                Console.WriteLine($"Id: {departamento.Id}, Descricao: {departamento.Descricao}");
+            }
         }
 
         static void EnsureCreatingAndDeleting()
