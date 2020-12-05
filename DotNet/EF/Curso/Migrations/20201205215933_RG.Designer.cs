@@ -3,14 +3,16 @@ using Curso.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DominadoEFCore.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20201205215933_RG")]
+    partial class RG
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,6 +51,9 @@ namespace DominadoEFCore.Migrations
                     b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("MyProperty")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
@@ -64,13 +69,11 @@ namespace DominadoEFCore.Migrations
 
             modelBuilder.Entity("Curso.Domain.Funcionario", b =>
                 {
-                    b.HasOne("Curso.Domain.Departamento", "Departamento")
+                    b.HasOne("Curso.Domain.Departamento", null)
                         .WithMany("Funcionarios")
                         .HasForeignKey("DepartamentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Departamento");
                 });
 
             modelBuilder.Entity("Curso.Domain.Departamento", b =>
