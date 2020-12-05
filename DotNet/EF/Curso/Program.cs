@@ -27,7 +27,19 @@ namespace DominadoEFCore
 
             //SqlInjection();
 
-            MigracoesPendentes();
+            //MigracoesPendentes();
+
+            AplicarMigracaoEmTempodeExecucao();
+        }
+
+        static void AplicarMigracaoEmTempodeExecucao()
+        {
+            //Cuidado a utilizar esta pratica em contextos onde possa haver várias aplicações
+            //concorrendo e tentando aplicação a mesma migração, por exemplo, num container kuberts 
+            //com varios pods concorrendo entre si.
+            using var db = new Curso.Data.ApplicationContext();
+
+            db.Database.Migrate();
         }
 
         static void MigracoesPendentes()
