@@ -39,7 +39,37 @@ namespace DominadoEFCore
 
             //CarregamentoAdiantado();
 
-            CarregamentoExplicito();
+            //CarregamentoExplicito();
+
+            CarregamentoLento();
+        }
+
+        static void CarregamentoLento()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            SetupTiposCarregamentos(db);
+
+            var departamentos = db
+                .Departamentos
+                .ToList(); // No carregamento lento é importante fazer o ToList no começo para evitar que a conexão fique aberta.
+
+            foreach (var departamento in departamentos)
+            {
+                Console.WriteLine("---------------------------------------");
+                Console.WriteLine($"Departamento: {departamento.Descricao}");
+
+                if (departamento.Funcionarios?.Any() ?? false)
+                {
+                    foreach (var funcionario in departamento.Funcionarios)
+                    {
+                        Console.WriteLine($"\tFuncionario: {funcionario.Nome}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"\tNenhum funcionario encontrado!");
+                }
+            }
         }
 
         static void CarregamentoExplicito()
