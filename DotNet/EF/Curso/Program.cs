@@ -37,7 +37,47 @@ namespace DominadoEFCore
 
             //ScriptGeralDoBancoDeDados();
 
-            CarregamentoAdiantado();
+            //CarregamentoAdiantado();
+
+            CarregamentoExplicito();
+        }
+
+        static void CarregamentoExplicito()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            SetupTiposCarregamentos(db);
+
+            var departamentos = db
+                .Departamentos
+                .ToList(); // No carregamento explicito é importante fazer o ToList no começo para evitar que a conexão fique aberta.
+
+            foreach (var departamento in departamentos)
+            {
+                //Carregar os dados do funcionarios somente de acordo com alguma regra de negócio
+                if(departamento.Id == 2)
+                {
+                    ////Carregar todos os funcionários do departamento Id=2
+                    //db.Entry(departamento).Collection(p=>p.Funcionarios).Load();
+                    
+                    ////Carregar todos os funcionários do departamento Id=2 AND Nome comece com Bruno
+                    db.Entry(departamento).Collection(p=>p.Funcionarios).Query().Where(p=>p.Nome.StartsWith("Bruno")).ToList();
+                }
+
+                Console.WriteLine("---------------------------------------");
+                Console.WriteLine($"Departamento: {departamento.Descricao}");
+
+                if (departamento.Funcionarios?.Any() ?? false)
+                {
+                    foreach (var funcionario in departamento.Funcionarios)
+                    {
+                        Console.WriteLine($"\tFuncionario: {funcionario.Nome}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"\tNenhum funcionario encontrado!");
+                }
+            }
         }
 
         static void CarregamentoAdiantado()
