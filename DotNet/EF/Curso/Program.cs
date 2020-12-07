@@ -11,9 +11,24 @@ namespace DominadoEFCore
     {
         static void Main(string[] args)
         {
-            FiltroGlobal();
+            ///FiltroGlobal();
+
+            IgnorarFiltroGlobal();
         }
         
+        static void IgnorarFiltroGlobal()
+        {
+            using var db = new ApplicationContext();
+            SetupDb(db);
+
+            var departamentos = db.Departamentos.IgnoreQueryFilters().Where(p => p.Id > 0).ToList();
+
+            foreach(var dep in departamentos)
+            {
+                Console.WriteLine($"Descrição: {dep.Descricao} \t Excluido: {dep.Excluido}");
+            }
+        }
+
         static void FiltroGlobal()
         {
             using var db = new ApplicationContext();
