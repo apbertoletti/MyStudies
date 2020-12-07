@@ -13,9 +13,34 @@ namespace DominadoEFCore
         {
             ///FiltroGlobal();
 
-            IgnorarFiltroGlobal();
+            //IgnorarFiltroGlobal();
+
+            ConsultaProjetada();
         }
         
+        static void ConsultaProjetada()
+        {
+            using var db = new ApplicationContext();
+            SetupDb(db);
+
+            var departamentos = db.Departamentos
+                .Where(p => p.Id > 0)
+                .Select(p => new {
+                     p.Descricao, 
+                     FuncionarioNomes = p.Funcionarios.Select(f => f.Nome)})
+                .ToList();
+
+            foreach(var dep in departamentos)
+            {
+                Console.WriteLine($"Descrição: {dep.Descricao}");
+
+                foreach(var func in dep.FuncionarioNomes)
+                {
+                    Console.WriteLine($"\t Nome: {func}");
+                }
+            }
+        }
+
         static void IgnorarFiltroGlobal()
         {
             using var db = new ApplicationContext();
