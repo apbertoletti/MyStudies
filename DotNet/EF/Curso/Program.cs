@@ -15,9 +15,31 @@ namespace DominadoEFCore
 
             //IgnorarFiltroGlobal();
 
-            ConsultaProjetada();
+            //ConsultaProjetada();
+
+            DivisaoDeConsulta();
         }
         
+        static void DivisaoDeConsulta()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            SetupDb(db);
+
+            var departamentos = db.Departamentos
+                .Include(p => p.Funcionarios)
+                .AsSplitQuery()
+                .Where(p => p.Id < 3)
+                .ToList();
+
+            foreach (var dep in departamentos)
+            {
+                Console.WriteLine($"Descrição: {dep.Descricao}");
+                foreach(var func in dep.Funcionarios)
+                {
+                    Console.WriteLine($"\tNome: {func.Nome}");
+                }
+            }   
+        }
         static void ConsultaProjetada()
         {
             using var db = new ApplicationContext();
