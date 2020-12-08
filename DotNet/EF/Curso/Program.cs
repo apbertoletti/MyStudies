@@ -27,7 +27,6 @@ namespace DominadoEFCore
 
             var departamentos = db.Departamentos
                 .Include(p => p.Funcionarios)
-                .AsSplitQuery()
                 .Where(p => p.Id < 3)
                 .ToList();
 
