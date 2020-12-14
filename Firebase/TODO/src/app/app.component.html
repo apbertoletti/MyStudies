@@ -12,8 +12,8 @@
   </mat-card>
 
   <mat-card class="card"> 
-    <mat-selection-list>
-      <mat-list-option *ngFor="let item of list" [selected]="item.done">
+    <mat-selection-list (selectionChange)='checkTask($event)'>
+      <mat-list-option *ngFor="let item of list" [selected]="item.done" [value]="item">
         {{item.text}}
       </mat-list-option>
     </mat-selection-list>
