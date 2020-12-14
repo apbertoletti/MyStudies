@@ -6,4 +6,5 @@ My demos, lessons and exercises about follow stacks
 - JavaScript
 - Angular
 - Dotnet
+- Firebase
 
