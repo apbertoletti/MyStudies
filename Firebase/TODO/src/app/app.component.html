@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+  <span>TODO FIRABASE</span>
+</mat-toolbar>
+
+<div class="container">
+  <mat-card class="card">
+    <mat-form-field>
+      <mat-label>Nova tarefa:</mat-label>
+      <input matInput [(ngModel)]="newTodoItem" />
+    </mat-form-field>
+    <button class="form-button" mat-raised-button color="primary" (click)="addNewItem()">Adicionar</button>
+  </mat-card>
+</div>
