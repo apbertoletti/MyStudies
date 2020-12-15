@@ -35,5 +35,10 @@ app.post('/completeTask/:id', async (req, res) => {
 
 exports.api = functions.https.onRequest(app);
 
-// Create and Deploy Your First Cloud Functions
-// https://firebase.google.com/docs/functions/write-firebase-functions
+exports.sendNotification = functions.firestore.document('Tasks/{id}').onWrite(async (change) => {
+    const data = change.after.data() || {};
+    await admin.firestore().collection('Notifications').add({
+        text: 'Nova tarefa criada: ' + data.text,
+        date: new Date()
+    });
+});
