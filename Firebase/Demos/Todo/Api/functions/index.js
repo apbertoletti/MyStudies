@@ -26,6 +26,13 @@ app.post('/createTask', async (req, res) => {
     res.json({ success: true });
 })
 
+app.post('/completeTask/:id', async (req, res) => {
+    await admin.firestore().collection('Tasks').doc(req.params.id).update({
+        done: true
+    });
+    res.json({ success: true });
+})
+
 exports.api = functions.https.onRequest(app);
 
 // Create and Deploy Your First Cloud Functions
