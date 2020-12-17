@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { PushNotificationService } from './services/push-notification.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,22 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class AppComponent {
   public newTodoItem = "";
   public list = [];
+  private mesaggeReceived = '';
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(private firestore: AngularFirestore, private notification: PushNotificationService) {
     this.firestore.collection('Tasks').valueChanges({ idField: 'id' }).subscribe((data) => {
       this.list = data;
+    });
+
+    notification.requestPermission().then(token => {
+      console.log(token);
+    })
+  }
+
+  ngOnInit(): void {
+    this.notification.receiveMessage().subscribe(payload => {
+      console.log(payload);
+      this.mesaggeReceived = payload.notification.title;
     })
   }
 

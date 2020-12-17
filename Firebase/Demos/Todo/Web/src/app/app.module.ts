@@ -15,6 +15,7 @@ import { MatListModule } from '@angular/material/list'
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { PushNotificationService } from './services/push-notification.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule
   ],
-  providers: [],
+  providers: [PushNotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
