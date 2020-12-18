@@ -21,7 +21,24 @@ namespace DominadoEFCore
 
             //CriarStoredProcedure();
 
-            InserirDadosViaProcedure();
+            //InserirDadosViaProcedure();
+
+            CriarStoredProcedureConsulta();
+        }
+
+        static void CriarStoredProcedureConsulta()
+        {
+            var scriptSP = @"
+            CREATE OR ALTER PROCEDURE SelecionarDepartamento
+                @Descricao VARCHAR(50)
+            AS
+            BEGIN
+                SELECT * FROM Departamentos WHERE Descricao LIKE @Descricao + '%'
+            END";
+
+            using var db = new Curso.Data.ApplicationContext();
+
+            db.Database.ExecuteSqlRaw(scriptSP);
         }
 
         static void InserirDadosViaProcedure()
