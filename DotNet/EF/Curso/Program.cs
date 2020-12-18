@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Curso.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -32,9 +33,13 @@ namespace DominadoEFCore
         {
             using var db = new Curso.Data.ApplicationContext();
 
+            var desc = new SqlParameter("@desc", "Dep");
+
             var departamentos =
                 db.Departamentos
-                .FromSqlRaw("EXECUTE SelecionarDepartamento @p0", "Dep")
+                //.FromSqlRaw("EXECUTE SelecionarDepartamento @p0", "Dep")
+                //.FromSqlRaw("EXECUTE SelecionarDepartamento @desc", desc)
+                .FromSqlInterpolated($"EXECUTE SelecionarDepartamento {desc}")
                 .ToList();
             
             foreach (var dep in departamentos)
