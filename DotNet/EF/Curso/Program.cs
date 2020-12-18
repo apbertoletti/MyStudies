@@ -17,9 +17,28 @@ namespace DominadoEFCore
 
             //ConsultaProjetada();
 
-            DivisaoDeConsulta();
+            //DivisaoDeConsulta();
+
+            CriarStoredProcedure();
         }
         
+        static void CriarStoredProcedure()
+        {
+            var scriptSP = @"
+            CREATE OR ALTER PROCEDURE CriarDepartamento
+                @Descricao VARCHAR(50),
+                @ATivo BIT
+            AS
+            BEGIN
+                INSERT INTO Departamento (Descricao, Ativo, Excluido)
+                VALUES (@Descricao, @Ativo, 0)
+            END";
+
+            using var db = new Curso.Data.ApplicationContext();
+
+            db.Database.ExecuteSqlRaw(scriptSP);
+        }
+
         static void DivisaoDeConsulta()
         {
             using var db = new Curso.Data.ApplicationContext();
