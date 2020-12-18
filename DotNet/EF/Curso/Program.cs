@@ -19,7 +19,16 @@ namespace DominadoEFCore
 
             //DivisaoDeConsulta();
 
-            CriarStoredProcedure();
+            //CriarStoredProcedure();
+
+            InserirDadosViaProcedure();
+        }
+
+        static void InserirDadosViaProcedure()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+
+            db.Database.ExecuteSqlRaw("EXECUTE CriarDepartamento @p0, @p1", "Departamento novo", true);
         }
         
         static void CriarStoredProcedure()
@@ -30,7 +39,7 @@ namespace DominadoEFCore
                 @ATivo BIT
             AS
             BEGIN
-                INSERT INTO Departamento (Descricao, Ativo, Excluido)
+                INSERT INTO Departamentos (Descricao, Ativo, Excluido)
                 VALUES (@Descricao, @Ativo, 0)
             END";
 
