@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Curso.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -8,6 +9,8 @@ namespace Curso.Data
 {
     public class ApplicationContext : DbContext
     {
+        private readonly StreamWriter logFile = new StreamWriter(@"C:\Temp\meu-log-ef.txt", append: true);
+        
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
 
@@ -18,16 +21,19 @@ namespace Curso.Data
             optionsBuilder
                 .UseSqlServer(strConnection)
                 .EnableSensitiveDataLogging()
-                .LogTo(
-                    Console.WriteLine,
-                    new[] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
-                    LogLevel.Information,
-                    DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine);
+                .LogTo(logFile.WriteLine, LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Departamento>().HasQueryFilter(p => !p.Excluido);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            logFile.Dispose();
         }
     }
 }
