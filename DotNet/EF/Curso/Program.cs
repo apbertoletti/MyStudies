@@ -12,7 +12,7 @@ namespace DominadoEFCore
     {
         static void Main(string[] args)
         {
-            ///FiltroGlobal();
+            FiltroGlobal();
 
             //IgnorarFiltroGlobal();
 
@@ -26,7 +26,7 @@ namespace DominadoEFCore
 
             //CriarStoredProcedureConsulta();
 
-            ConsultarDadosViaProcedure();
+            //ConsultarDadosViaProcedure();
         }
 
         static void ConsultarDadosViaProcedure()

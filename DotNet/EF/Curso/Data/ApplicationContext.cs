@@ -1,6 +1,7 @@
 using System;
 using Curso.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 
 namespace Curso.Data
@@ -17,7 +18,11 @@ namespace Curso.Data
             optionsBuilder
                 .UseSqlServer(strConnection)
                 .EnableSensitiveDataLogging()
-                .LogTo(Console.WriteLine, LogLevel.Information);
+                .LogTo(
+                    Console.WriteLine,
+                    new[] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
+                    LogLevel.Information,
+                    DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
