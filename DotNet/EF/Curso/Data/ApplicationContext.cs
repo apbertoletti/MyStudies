@@ -21,7 +21,8 @@ namespace Curso.Data
             optionsBuilder
                 .UseSqlServer(strConnection)
                 .EnableSensitiveDataLogging()
-                .LogTo(logFile.WriteLine, LogLevel.Information);
+                .LogTo(logFile.WriteLine, LogLevel.Information)
+                .EnableDetailedErrors();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
