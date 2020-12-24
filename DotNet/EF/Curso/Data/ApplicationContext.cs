@@ -19,7 +19,10 @@ namespace Curso.Data
             const string strConnection = "Data source=(localdb)\\mssqllocaldb; Initial Catalog=MyCourseEFCore-New;Integrated Security=true; Pooling=true";
 
             optionsBuilder
-                .UseSqlServer(strConnection)
+                .UseSqlServer(strConnection, o =>
+                {
+                    o.CommandTimeout(16);
+                })
                 .EnableSensitiveDataLogging()
                 .LogTo(logFile.WriteLine, LogLevel.Information)
                 .EnableDetailedErrors();

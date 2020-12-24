@@ -27,6 +27,14 @@ namespace DominadoEFCore
             //CriarStoredProcedureConsulta();
 
             //ConsultarDadosViaProcedure();
+
+            TestandoTimeout();
+        }
+
+        static void TestandoTimeout()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:15';SELECT 1;");
         }
 
         static void ConsultarDadosViaProcedure()
