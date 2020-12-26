@@ -12,7 +12,7 @@ namespace DominadoEFCore
     {
         static void Main(string[] args)
         {
-            FiltroGlobal();
+            //FiltroGlobal();
 
             //IgnorarFiltroGlobal();
 
@@ -34,7 +34,10 @@ namespace DominadoEFCore
         static void TestandoTimeout()
         {
             using var db = new Curso.Data.ApplicationContext();
-            db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:15';SELECT 1;");
+
+            db.Database.SetCommandTimeout(21);
+
+            db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:20';SELECT 1;");
         }
 
         static void ConsultarDadosViaProcedure()
