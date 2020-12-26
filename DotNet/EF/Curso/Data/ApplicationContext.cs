@@ -22,6 +22,7 @@ namespace Curso.Data
                 .UseSqlServer(strConnection, o =>
                 {
                     o.CommandTimeout(16);
+                    o.EnableRetryOnFailure(4, TimeSpan.FromSeconds(10), null);
                 })
                 .EnableSensitiveDataLogging()
                 .LogTo(logFile.WriteLine, LogLevel.Information)
