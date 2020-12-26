@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Curso.Data;
+using Curso.Domain;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -28,7 +29,28 @@ namespace DominadoEFCore
 
             //ConsultarDadosViaProcedure();
 
-            TestandoTimeout();
+            //TestandoTimeout();
+
+            ExecutarEstrategiaResiliencia();
+        }
+
+        private static void ExecutarEstrategiaResiliencia()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+
+            var strategy = db.Database.CreateExecutionStrategy();
+            strategy.Execute(() =>
+            {
+                using var transacation = db.Database.BeginTransaction();
+
+                var newDep = db.Departamentos.Add(new Departamento { Descricao = "Novo departamento adicionado" });
+                db.SaveChanges();
+
+                db.Funcionarios.Add(new Funcionario { DepartamentoId = newDep.Entity.Id, Nome = "Novo funcionario adicionado" });
+                db.SaveChanges();
+
+                transacation.Commit();
+            });
         }
 
         static void TestandoTimeout()
