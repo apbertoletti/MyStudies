@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Curso.Domain;
+using DominadoEFCore.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,8 @@ namespace Curso.Data
         
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,7 +34,15 @@ namespace Curso.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Departamento>().HasQueryFilter(p => !p.Excluido);
+            modelBuilder.Entity<Cliente>(c =>
+            {
+                c.OwnsOne(p => p.Endereco, end =>
+                {
+                    end.Property(prop => prop.Bairro).HasColumnName("Bairro");
+
+                    end.ToTable("ClienteEndereco");
+                });
+            });
         }
 
         public override void Dispose()

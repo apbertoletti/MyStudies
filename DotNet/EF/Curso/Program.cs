@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Text.Json;
 using Curso.Data;
 using Curso.Domain;
+using DominadoEFCore.Domain;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -31,7 +33,41 @@ namespace DominadoEFCore
 
             //TestandoTimeout();
 
-            ExecutarEstrategiaResiliencia();
+            //ExecutarEstrategiaResiliencia();
+
+            OwnedType();
+        }
+
+        private static void OwnedType()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var cliente = new Cliente()
+            {
+                Nome = "Nome do cliente",
+                Telefone = "Telefone do cliente",
+                Endereco = new Endereco 
+                { 
+                    Logradouro = "Rua das flores, 124", 
+                    Bairro = "Jardin", 
+                    Cidade = "Floricultura",
+                    Estado = "Flora do Sul"
+                }
+            };
+
+            db.Clientes.Add(cliente);
+            db.SaveChanges();
+
+            var clientes = db.Clientes.AsNoTracking().ToList();
+
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            clientes.ForEach(c =>
+            {
+                var json = JsonSerializer.Serialize(clientes, options);
+                Console.WriteLine(json);
+            });
         }
 
         private static void ExecutarEstrategiaResiliencia()
