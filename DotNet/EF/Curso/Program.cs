@@ -38,7 +38,65 @@ namespace DominadoEFCore
 
             //OwnedType();
 
-            Relacionamento1para1();
+            //Relacionamento1para1();
+
+            Relacionamento1paraN();
+        }
+
+        private static void Relacionamento1paraN()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var cliente = new Cliente()
+            {
+                Nome = "Nome do cliente",               
+                Endereco = new Endereco
+                {
+                    Logradouro = "Rua das flores, 124",
+                    Bairro = "Jardin",
+                    Cidade = "Floricultura",
+                    Estado = "Flora do Sul"
+                },
+                Profissao = new Profissao
+                {
+                    Nome = "Cortador de galhos"
+                }
+            };
+
+            cliente.Telefones.Add(new Telefone() { DDD = 19, Numero = 34434533 });
+            cliente.Telefones.Add(new Telefone() { DDD = 11, Numero = 93445134 });
+
+            cliente.Contas.Add(new ContasReceber() { Valor = 100, Vencimento = DateTime.Now.AddDays(30) });
+            cliente.Contas.Add(new ContasReceber() { Valor = 200, Vencimento = DateTime.Now.AddDays(60) });
+            cliente.Contas.Add(new ContasReceber() { Valor = 300, Vencimento = DateTime.Now.AddDays(90) });
+
+            db.Clientes.Add(cliente);
+            db.SaveChanges();
+
+            var clientes = 
+                db.Clientes
+                    .Include(c => c.Telefones)
+                    .Include(c => c.Contas)
+                    .AsNoTracking()
+                    .ToList();
+
+            clientes.ForEach(c =>
+            {
+                Console.WriteLine($"Nome: {c.Nome} | Profissão: {c.Profissao.Nome }");
+
+                c.Telefones.ToList().ForEach(t =>
+                {
+                    Console.WriteLine($"- Telefone ({t.DDD}) {t.Numero}");
+                });
+
+                Console.WriteLine("------------CONTAS-------------");
+                c.Contas.ToList().ForEach(r =>
+                {
+                    Console.WriteLine($"- Valor: ({r.Valor.ToString("C")}) | Vencimento: {r.Vencimento}");
+                });
+            });
         }
 
         private static void Relacionamento1para1()
@@ -50,7 +108,7 @@ namespace DominadoEFCore
             var cliente = new Cliente()
             {
                 Nome = "Nome do cliente",
-                Telefone = "Telefone do cliente",
+                //Telefone = "Telefone do cliente",
                 Endereco = new Endereco
                 {
                     Logradouro = "Rua das flores, 124",
@@ -84,7 +142,7 @@ namespace DominadoEFCore
             var cliente = new Cliente()
             {
                 Nome = "Nome do cliente",
-                Telefone = "Telefone do cliente",
+                //Telefone = "Telefone do cliente",
                 Endereco = new Endereco 
                 { 
                     Logradouro = "Rua das flores, 124", 

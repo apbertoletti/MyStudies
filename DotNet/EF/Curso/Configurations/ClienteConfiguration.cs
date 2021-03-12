@@ -29,6 +29,16 @@ namespace DominadoEFCore.Configurations
             builder
                 .Navigation(p => p.Profissao)
                 .AutoInclude();
+
+            builder
+                .HasMany(c => c.Telefones)
+                .WithOne() //neste caso, como não temos a propriedade de navegação no lado N, basta usar o WithOne sem parametros
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasMany(c => c.Contas)
+                .WithOne()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -10,9 +10,24 @@ namespace DominadoEFCore.Domain
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public string Telefone { get; set; }
+        public ICollection<Telefone> Telefones { get; } = new List<Telefone>();
         public Endereco Endereco { get; set; }
         public Profissao Profissao { get; set; }
+        public ICollection<ContasReceber> Contas { get; } = new List<ContasReceber>();
+    }
+
+    public class ContasReceber
+    {
+        public int Id { get; set; }
+        public DateTime Vencimento { get; set; }
+        public decimal Valor { get; set; }
+    }
+
+    public class Telefone
+    {
+        public int Id { get; set; }
+        public byte DDD { get; set; }
+        public int Numero { get; set; }
     }
 
     public class Endereco

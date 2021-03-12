@@ -10,9 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace Curso.Data
 {
     public class ApplicationContext : DbContext
-    {
-        private readonly StreamWriter logFile = new StreamWriter(@"C:\Temp\meu-log-ef.txt", append: true);
-        
+    {                
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
@@ -29,7 +27,7 @@ namespace Curso.Data
                     o.EnableRetryOnFailure(4, TimeSpan.FromSeconds(10), null);
                 })
                 .EnableSensitiveDataLogging()
-                .LogTo(logFile.WriteLine, LogLevel.Information)
+                .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableDetailedErrors();
         }
 
@@ -41,8 +39,6 @@ namespace Curso.Data
         public override void Dispose()
         {
             base.Dispose();
-
-            logFile.Dispose();
         }
     }
 }
