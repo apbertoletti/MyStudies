@@ -43,7 +43,15 @@ namespace DominadoEFCore.Configurations
             builder
                 .HasMany(c => c.Filmes)
                 .WithMany(c => c.Clientes)
-                .UsingEntity(p => p.ToTable("Filmes_Clientes"));
+                .UsingEntity<Dictionary<string, object>>(
+                    "Filme-Cliente",
+                    p => p.HasOne<Filme>().WithMany().HasForeignKey("FilmePK"),
+                    p => p.HasOne<Cliente>().WithMany().HasForeignKey("ClientePK"),
+                    p =>
+                    {
+                        p.Property<DateTime>("CadastradoEm").HasDefaultValueSql("GETDATE()");
+                    }
+                 );
         }
     }
 }
