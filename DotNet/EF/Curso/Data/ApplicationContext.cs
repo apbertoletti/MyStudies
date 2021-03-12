@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Curso.Domain;
+using DominadoEFCore.Configurations;
 using DominadoEFCore.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -34,15 +35,7 @@ namespace Curso.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Cliente>(c =>
-            {
-                c.OwnsOne(p => p.Endereco, end =>
-                {
-                    end.Property(prop => prop.Bairro).HasColumnName("Bairro");
-
-                    end.ToTable("ClienteEndereco");
-                });
-            });
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
         }
 
         public override void Dispose()

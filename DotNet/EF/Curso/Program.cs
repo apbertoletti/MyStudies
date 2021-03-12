@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Curso.Data;
 using Curso.Domain;
 using DominadoEFCore.Domain;
@@ -35,7 +36,43 @@ namespace DominadoEFCore
 
             //ExecutarEstrategiaResiliencia();
 
-            OwnedType();
+            //OwnedType();
+
+            Relacionamento1para1();
+        }
+
+        private static void Relacionamento1para1()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var cliente = new Cliente()
+            {
+                Nome = "Nome do cliente",
+                Telefone = "Telefone do cliente",
+                Endereco = new Endereco
+                {
+                    Logradouro = "Rua das flores, 124",
+                    Bairro = "Jardin",
+                    Cidade = "Floricultura",
+                    Estado = "Flora do Sul"
+                },
+                Profissao = new Profissao
+                {
+                    Nome = "Cortador de galhos"
+                }
+            };
+
+            db.Clientes.Add(cliente);
+            db.SaveChanges();
+
+            var clientes = db.Clientes.Include(c =>c.Profissao).AsNoTracking().ToList();
+
+            clientes.ForEach(c =>
+            {
+                Console.WriteLine($"Nome: {c.Nome} | Profissão: {c.Profissao.Nome }");
+            });
         }
 
         private static void OwnedType()
