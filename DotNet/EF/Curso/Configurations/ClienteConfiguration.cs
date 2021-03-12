@@ -39,6 +39,11 @@ namespace DominadoEFCore.Configurations
                 .HasMany(c => c.Contas)
                 .WithOne()
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasMany(c => c.Filmes)
+                .WithMany(c => c.Clientes)
+                .UsingEntity(p => p.ToTable("Filmes_Clientes"));
         }
     }
 }
