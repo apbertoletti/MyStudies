@@ -40,7 +40,70 @@ namespace DominadoEFCore
 
             //Relacionamento1para1();
 
-            Relacionamento1paraN();
+            //Relacionamento1paraN();
+
+            RelacionamentoNparaN();
+        }
+
+        private static void RelacionamentoNparaN()
+        {
+            using var db = new Curso.Data.ApplicationContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var cliente1 = new Cliente()
+            {
+                Nome = "Nome do cliente 1",
+            };
+
+            var cliente2 = new Cliente()
+            {
+                Nome = "Nome do cliente 2",
+            };
+
+            var filme1 = new Filme()
+            {
+                Nome = "Esqueceram de mim",
+                AnoLancamento = 1990
+            };
+
+            var filme2 = new Filme()
+            {
+                Nome = "Matrix",
+                AnoLancamento = 1999
+            };
+
+            var filme3 = new Filme()
+            {
+                Nome = "Tomates verdes fritos",
+                AnoLancamento = 1991
+            };
+
+            cliente1.Filmes.Add(filme1);
+
+            filme2.Clientes.Add(cliente1);
+            filme2.Clientes.Add(cliente2);
+
+            filme3.Clientes.Add(cliente2);
+
+            db.AddRange(cliente1, cliente2, filme1, filme2, filme3);
+            db.SaveChanges();
+
+            var clientes =
+                db.Clientes
+                    .Include(c => c.Filmes)                   
+                    .AsNoTracking()
+                    .ToList();
+
+            clientes.ForEach(c =>
+            {
+                Console.WriteLine($"Nome: {c.Nome}");
+
+                c.Filmes.ToList().ForEach(f =>
+                {
+                    Console.WriteLine($"- Filme: ({f.Nome}) | {f.AnoLancamento}");
+                });
+            });
         }
 
         private static void Relacionamento1paraN()

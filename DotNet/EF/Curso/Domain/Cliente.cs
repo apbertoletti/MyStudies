@@ -14,6 +14,7 @@ namespace DominadoEFCore.Domain
         public Endereco Endereco { get; set; }
         public Profissao Profissao { get; set; }
         public ICollection<ContasReceber> Contas { get; } = new List<ContasReceber>();
+        public ICollection<Filme> Filmes { get; } = new List<Filme>();
     }
 
     public class ContasReceber
