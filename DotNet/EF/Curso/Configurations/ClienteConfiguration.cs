@@ -25,6 +25,10 @@ namespace DominadoEFCore.Configurations
                 .WithOne(p => p.Cliente)
                 .HasForeignKey<Profissao>(p => p.ClienteFK)
                 .HasConstraintName("FK__Cliente__Profissao");
+
+            builder
+                .Navigation(p => p.Profissao)
+                .AutoInclude();
         }
     }
 }

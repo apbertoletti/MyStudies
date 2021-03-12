@@ -67,7 +67,7 @@ namespace DominadoEFCore
             db.Clientes.Add(cliente);
             db.SaveChanges();
 
-            var clientes = db.Clientes.Include(c =>c.Profissao).AsNoTracking().ToList();
+            var clientes = db.Clientes.AsNoTracking().ToList();
 
             clientes.ForEach(c =>
             {
